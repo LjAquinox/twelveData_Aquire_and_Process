@@ -6,6 +6,7 @@ How to use :
 Get your API key from the [Twelve Data website](https://twelvedata.com)
 
 (probably gonna create a file for all infos to be imported later)
+
 Put it in both AquireData and VisualTradingView 
 Now change symbols/timerange that you wanna download, there are things to change in all files except VisualTradingView.
 Change the directories where you want your files to be downloaded, there are things to change in all files except VisualTradingView.
