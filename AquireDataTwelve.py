@@ -5,12 +5,8 @@ import pandas as pd
 from io import StringIO
 import time
 import requests
+from Global import * #file with all the config
 
-api_keys = ["YourAPIkey"]
-interval = '1min'
-symbols=['USD/JPY']
-startDates = ["2023-07-19 8:30:00"]
-endDates = ["2023-07-19 18:20:00"]
 key_index = 0
 
 
@@ -28,18 +24,19 @@ def get_intraday_extended_data(symbol, interval, start_date, end_date, api_key):
     }
 
     response = requests.get(base_url, params=params)
-    print(response)
+    #print(response)
 
-    #response = requests.get("https://api.twelvedata.com/time_series?apikey="+api_key+"&interval="+interval+"&symbol="+symbol+"&dp=4&"+slice+"&previous_close=true")
     if response.status_code == 200:
         data = pd.read_csv(StringIO(response.text))
-        print(data)
+        #print(data)
         return data
     else:
         raise Exception(f"Request failed with status {response.status_code}")
 
 
 # Loop over all symbols
+print("You should see the size of the retrieved date in the second to last column, this should be between 1000 and 5000 for full slices.)")
+print("If it is 5000 you should check the Global.py file because you are getting slices too big for your interval")
 for symbol in symbols:
 
     # Create an empty DataFrame to store all data for this symbol
@@ -52,20 +49,19 @@ for symbol in symbols:
         data = get_intraday_extended_data(symbol, interval, startDates[idx], endDates[idx], api_keys[key_index])
         finish = time.time()
         total = finish - start
-        #print(total)
 
         # Append the data to the DataFrame
-        data_all = pd.concat([data_all, data])
+        data_all = pd.concat([data, data_all])
 
-        # Increment the key index and reset it to 0 if it's out of range
+        # select the next apikey for the next slice
         key_index += 1
         if key_index >= len(api_keys):
             key_index = 0
 
         # Sleep for a while to avoid hitting rate limits
-        time.sleep(max(13-int(total),0))  # Adjust this value as needed
+        time.sleep(max(int(60/MaxAPICallPerMin)-int(total),0))
 
         print(f'slice just aquired :{symbol} : {startDates[idx], endDates[idx]} : {data.size} : {total}')
 
     # Save the data to a CSV file
-    data_all.to_csv(f'DataFiles/{symbol.replace("/", "")}_data.csv', index=False)
+    data_all.to_csv(f'DataFiles/{symbol.replace("/", "")}_data.csv', index=False, mode='w')

@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-symbols=["USD/JPY"]
+from Global import * #file with all the config
 
 for symbol in symbols:
     # Load the data

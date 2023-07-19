@@ -3,7 +3,7 @@ import json
 import datetime
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+from Global import * #file with all the config
 
 # Variables for storing data
 timestamps = []
@@ -59,7 +59,7 @@ def on_message(ws, message):
         #last_point._update_data #for future idea
 
         # Convert timestamp to date and time
-        datetime_obj = datetime.datetime.fromtimestamp(timestamp)
+        datetime_obj = datetime.fromtimestamp(timestamp)
         formatted_time = datetime_obj.strftime('%H:%M:%S')
 
         # Display the price and formatted time
@@ -91,11 +91,10 @@ def on_error(ws, error):
 def on_close(ws):
     print('WebSocket connection closed')
 
-apikey = "YourAPIKEY"
 # Establish WebSocket connection
 websocket.enableTrace(True)  # Enable this line for debugging purposes
 ws = websocket.WebSocketApp(
-    'wss://ws.twelvedata.com/v1/quotes/price?apikey='+apikey,
+    'wss://ws.twelvedata.com/v1/quotes/price?apikey='+api_keys[0],
     on_open=on_open,
     on_message=on_message,
     on_error=on_error,
