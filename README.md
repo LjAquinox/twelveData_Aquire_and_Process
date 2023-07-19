@@ -5,14 +5,9 @@ How to use :
 
 Get your API key from the [Twelve Data website](https://twelvedata.com)
 
-(probably gonna create a file for all infos to be imported later)
+Configure all the settings in Global.py
 
-Put it in both AquireData and VisualTradingView 
-
-Now change symbols/timerange that you wanna download, there are things to change in all files except VisualTradingView.
-
-Change the directories where you want your files to be downloaded, there are things to change in all files except VisualTradingView.
-
+Select the interval, date range and the symbols you want to download.
 
 Now run in order :
 1) AquireDataTwelve
@@ -22,7 +17,5 @@ Now run in order :
 If everything was done properly you should get a .npy file for later training.
 
 This is very rudementary but might help someone out there cause I would have liked to find this myself.
-
-A lot of things are easy to make better for QoL and the code is pretty much crap but works.
 
 PS : some part were made with help from GPT but most is made by hand.
