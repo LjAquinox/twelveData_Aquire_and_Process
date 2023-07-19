@@ -3,7 +3,7 @@ Download financial data with free account from twelve data then process it to tr
 
 How to use :
 
-Get your API key from the [Twelve Data website](https://twelvedata.com
+Get your API key from the [Twelve Data website](https://twelvedata.com)
 
 (probably gonna create a file for all infos to be imported later)
 Put it in both AquireData and VisualTradingView 
